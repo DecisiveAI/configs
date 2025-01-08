@@ -1,0 +1,193 @@
+{
+    "datasource": {
+      "default": true,
+      "uid": "prometheus",
+      "type": "prometheus"
+    },
+    "description": "Receivers by service_name descending most to least sum for last hour",
+    "fieldConfig": {
+      "defaults": {
+        "custom": {
+          "align": "auto",
+          "cellOptions": {
+            "type": "color-text",
+            "wrapText": false
+          },
+          "inspect": true,
+          "filterable": true
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "text",
+              "value": null
+            },
+            {
+              "color": "text",
+              "value": 0
+            },
+            {
+              "color": "green",
+              "value": 100
+            },
+            {
+              "color": "orange",
+              "value": 1000
+            },
+            {
+              "color": "red",
+              "value": 10000
+            }
+          ]
+        },
+        "color": {
+          "mode": "thresholds"
+        },
+        "fieldMinMax": false
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "service_name"
+          },
+          "properties": [
+            {
+              "id": "displayName",
+              "value": "Service"
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "Value #B"
+          },
+          "properties": [
+            {
+              "id": "displayName",
+              "value": "Logs"
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "Value #A"
+          },
+          "properties": [
+            {
+              "id": "displayName",
+              "value": "Bytes"
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 13,
+      "w": 12,
+      "x": 0,
+      "y": 1
+    },
+    "id": 9,
+    "options": {
+      "showHeader": true,
+      "cellHeight": "md",
+      "footer": {
+        "show": true,
+        "reducer": [
+          "sum"
+        ],
+        "countRows": false,
+        "fields": [
+          "Total"
+        ],
+        "enablePagination": true
+      },
+      "frameIndex": 0,
+      "sortBy": []
+    },
+    "pluginVersion": "11.2.2+security-01",
+    "targets": [
+      {
+        "datasource": {
+          "uid": "prometheus",
+          "type": "prometheus"
+        },
+        "refId": "A",
+        "expr": "increase(sum by(service_name) (mdai_logs_received_total)[$__rate_interval:])",
+        "range": true,
+        "instant": false,
+        "hide": false,
+        "editorMode": "code",
+        "legendFormat": "__auto",
+        "useBackend": false,
+        "disableTextWrap": false,
+        "fullMetaSearch": false,
+        "includeNullMetadata": true,
+        "format": "time_series"
+      },
+      {
+        "datasource": {
+          "uid": "prometheus",
+          "type": "prometheus"
+        },
+        "refId": "B",
+        "expr": "increase(sum by(service_name) (mdai_log_bytes_received_total)[$__rate_interval:])",
+        "range": true,
+        "instant": false,
+        "hide": true,
+        "editorMode": "code",
+        "legendFormat": "__auto",
+        "useBackend": false,
+        "disableTextWrap": false,
+        "fullMetaSearch": false,
+        "includeNullMetadata": true,
+        "format": "time_series"
+      }
+    ],
+    "title": "Receivers by service_name",
+    "type": "table",
+    "interval": "1m",
+    "transformations": [
+      {
+        "id": "merge",
+        "options": {},
+        "disabled": true
+      },
+      {
+        "id": "reduce",
+        "options": {
+          "reducers": [
+            "sum"
+          ],
+          "mode": "seriesToRows",
+          "includeTimeField": false,
+          "labelsToFields": false
+        }
+      },
+      {
+        "id": "sortBy",
+        "options": {
+          "fields": {},
+          "sort": [
+            {
+              "field": "Total",
+              "desc": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "limit",
+        "options": {
+          "limitField": "40"
+        }
+      }
+    ],
+    "maxDataPoints": null,
+    "timeFrom": null
+  }
