@@ -1,193 +1,148 @@
 {
     "datasource": {
       "default": true,
-      "uid": "prometheus",
-      "type": "prometheus"
+      "type": "prometheus",
+      "uid": "prometheus"
     },
-    "description": "Receivers by service_name descending most to least sum for last hour",
     "fieldConfig": {
       "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
         "custom": {
           "align": "auto",
           "cellOptions": {
-            "type": "color-text",
-            "wrapText": false
+            "type": "auto"
           },
-          "inspect": true,
-          "filterable": true
+          "inspect": false
         },
         "mappings": [],
         "thresholds": {
           "mode": "absolute",
           "steps": [
             {
-              "color": "text",
+              "color": "green",
               "value": null
             },
             {
-              "color": "text",
-              "value": 0
-            },
-            {
-              "color": "green",
-              "value": 100
-            },
-            {
-              "color": "orange",
-              "value": 1000
-            },
-            {
               "color": "red",
-              "value": 10000
+              "value": 80
             }
           ]
-        },
-        "color": {
-          "mode": "thresholds"
-        },
-        "fieldMinMax": false
+        }
       },
       "overrides": [
         {
           "matcher": {
             "id": "byName",
-            "options": "service_name"
+            "options": "Bytes"
           },
           "properties": [
             {
-              "id": "displayName",
-              "value": "Service"
-            }
-          ]
-        },
-        {
-          "matcher": {
-            "id": "byName",
-            "options": "Value #B"
-          },
-          "properties": [
-            {
-              "id": "displayName",
-              "value": "Logs"
-            }
-          ]
-        },
-        {
-          "matcher": {
-            "id": "byName",
-            "options": "Value #A"
-          },
-          "properties": [
-            {
-              "id": "displayName",
-              "value": "Bytes"
+              "id": "unit",
+              "value": "decbytes"
             }
           ]
         }
       ]
     },
     "gridPos": {
-      "h": 13,
+      "h": 8,
       "w": 12,
       "x": 0,
-      "y": 1
+      "y": 0
     },
-    "id": 9,
+    "id": 12,
     "options": {
-      "showHeader": true,
-      "cellHeight": "md",
+      "cellHeight": "sm",
       "footer": {
-        "show": true,
+        "countRows": false,
+        "fields": "",
         "reducer": [
           "sum"
         ],
-        "countRows": false,
-        "fields": [
-          "Total"
-        ],
-        "enablePagination": true
+        "show": false
       },
       "frameIndex": 0,
-      "sortBy": []
+      "showHeader": true,
+      "sortBy": [
+        {
+          "desc": true,
+          "displayName": "Bytes"
+        }
+      ]
     },
     "pluginVersion": "11.2.2+security-01",
     "targets": [
       {
         "datasource": {
-          "uid": "prometheus",
-          "type": "prometheus"
+          "type": "prometheus",
+          "uid": "prometheus"
         },
-        "refId": "A",
-        "expr": "increase(sum by(service_name) (mdai_logs_received_total)[$__rate_interval:])",
-        "range": true,
-        "instant": false,
-        "hide": false,
         "editorMode": "code",
+        "expr": "increase(sum by (service_name)(mdai_logs_received_total)[$__rate_interval:])",
+        "format": "table",
+        "instant": false,
         "legendFormat": "__auto",
-        "useBackend": false,
-        "disableTextWrap": false,
-        "fullMetaSearch": false,
-        "includeNullMetadata": true,
-        "format": "time_series"
+        "range": true,
+        "refId": "A"
       },
       {
         "datasource": {
-          "uid": "prometheus",
-          "type": "prometheus"
+          "type": "prometheus",
+          "uid": "prometheus"
         },
-        "refId": "B",
-        "expr": "increase(sum by(service_name) (mdai_log_bytes_received_total)[$__rate_interval:])",
-        "range": true,
-        "instant": false,
-        "hide": true,
         "editorMode": "code",
+        "expr": "increase(sum by (service_name)(mdai_log_bytes_received_total)[$__rate_interval:])",
+        "format": "table",
+        "hide": false,
+        "instant": false,
         "legendFormat": "__auto",
-        "useBackend": false,
-        "disableTextWrap": false,
-        "fullMetaSearch": false,
-        "includeNullMetadata": true,
-        "format": "time_series"
+        "range": true,
+        "refId": "B"
       }
     ],
-    "title": "Receivers by service_name",
-    "type": "table",
-    "interval": "1m",
+    "title": "Panel Title",
     "transformations": [
       {
         "id": "merge",
-        "options": {},
-        "disabled": true
+        "options": {}
       },
       {
-        "id": "reduce",
+        "id": "groupBy",
         "options": {
-          "reducers": [
-            "sum"
-          ],
-          "mode": "seriesToRows",
-          "includeTimeField": false,
-          "labelsToFields": false
-        }
-      },
-      {
-        "id": "sortBy",
-        "options": {
-          "fields": {},
-          "sort": [
-            {
-              "field": "Total",
-              "desc": true
+          "fields": {
+            "Value #A": {
+              "aggregations": [
+                "sum"
+              ],
+              "operation": "aggregate"
+            },
+            "Value #B": {
+              "aggregations": [
+                "sum"
+              ],
+              "operation": "aggregate"
+            },
+            "service_name": {
+              "aggregations": [],
+              "operation": "groupby"
             }
-          ]
+          }
         }
       },
       {
-        "id": "limit",
+        "id": "organize",
         "options": {
-          "limitField": "40"
+          "excludeByName": {},
+          "includeByName": {},
+          "indexByName": {},
+          "renameByName": {
+            "Value #A (sum)": "Logs",
+            "Value #B (sum)": "Bytes"
+          }
         }
       }
     ],
-    "maxDataPoints": null,
-    "timeFrom": null
+    "type": "table"
   }
