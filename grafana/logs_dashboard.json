@@ -256,12 +256,16 @@
                       "value": null
                     },
                     {
-                      "color": "orange",
-                      "value": 500000
+                      "color": "green",
+                      "value": 100000000
                     },
                     {
-                      "color": "red",
-                      "value": 1000000
+                      "color": "yellow",
+                      "value": 1000000000
+                    },
+                    {
+                      "color": "orange",
+                      "value": 10000000000
                     }
                   ]
                 }
@@ -298,27 +302,17 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
+          "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "increase(sum by (service_name)(mdai_logs_received_total)[$__rate_interval:])",
+          "expr": "sum by(service_name) (increase(mdai_logs_received_total[$__rate_interval:]))",
           "format": "table",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "Receiver Logs"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "increase(sum by (service_name)(mdai_log_bytes_received_total)[$__rate_interval:])",
-          "format": "table",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "Receiver Bytes"
+          "refId": "Receiver Logs",
+          "useBackend": false
         },
         {
           "datasource": {
@@ -326,8 +320,26 @@
             "uid": "prometheus"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "increase(sum by(service_name) (mdai_logs_sent_total)[$__rate_interval:])",
+          "editorMode": "code",
+          "expr": "sum by(service_name) (increase(mdai_log_bytes_received_total[$__rate_interval:]))",
+          "format": "table",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "Receiver Bytes",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "disableTextWrap": false,
+          "editorMode": "code",
+          "expr": "sum by(service_name) (increase(mdai_logs_sent_total[$__rate_interval:]))",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -344,8 +356,8 @@
             "uid": "prometheus"
           },
           "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "increase(sum by(service_name) (mdai_log_bytes_sent_total)[$__rate_interval:])",
+          "editorMode": "code",
+          "expr": "sum by(service_name) (increase(mdai_log_bytes_sent_total[$__rate_interval:]))",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -468,7 +480,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Top talkers sent through MDAI Datalyzer",
+      "description": "Top talkers received through MDAI Datalyzer and reduction once sent",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -484,8 +496,8 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
+            "fillOpacity": 27,
+            "gradientMode": "opacity",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
@@ -533,32 +545,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Receiver Bytes"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "decbytes"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Sent Bytes"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "decbytes"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 16,
@@ -588,7 +575,24 @@
           },
           "disableTextWrap": false,
           "editorMode": "builder",
-          "expr": "increase(sum by(service_name) (mdai_logs_received_total)[$__rate_interval:]) > 50",
+          "expr": "sum by(service_name) (increase(mdai_logs_sent_total[$__rate_interval:])) > 50",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "sum by(service_name) (increase(mdai_logs_received_total[$__rate_interval:])) > 50",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -599,7 +603,7 @@
           "useBackend": false
         }
       ],
-      "title": "Top Talkers Receivers",
+      "title": "Top Talkers Receivers & Sent Logs Totals",
       "type": "timeseries"
     }
   ],
@@ -609,13 +613,13 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Services I/O",
   "uid": "de978rcegwfswb",
-  "version": 16,
+  "version": 17,
   "weekStart": ""
 }
