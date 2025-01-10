@@ -22,6 +22,19 @@
   "links": [],
   "panels": [
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 18,
+      "panels": [],
+      "title": "Totals for I/O Logs",
+      "type": "row"
+    },
+    {
       "datasource": {
         "default": true,
         "type": "prometheus",
@@ -59,7 +72,7 @@
         "h": 3,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "id": 14,
       "options": {
@@ -158,6 +171,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
+            "axisLabel": "",
             "axisPlacement": "auto",
             "fillOpacity": 80,
             "gradientMode": "hue",
@@ -183,7 +197,7 @@
                 },
                 "Value #Sent Total": {
                   "index": 1,
-                  "text": "Received Total"
+                  "text": "Sent Total"
                 }
               },
               "type": "value"
@@ -214,7 +228,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 3
+        "y": 4
       },
       "id": 16,
       "options": {
@@ -232,7 +246,7 @@
         "showValue": "always",
         "stacking": "none",
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         },
         "xField": "Field",
@@ -322,7 +336,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 3
+        "y": 4
       },
       "id": 17,
       "options": {
@@ -417,7 +431,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 13
       },
       "id": 13,
       "panels": [],
@@ -579,7 +593,7 @@
         "h": 16,
         "w": 12,
         "x": 0,
-        "y": 13
+        "y": 14
       },
       "id": 11,
       "options": {
@@ -787,7 +801,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Top talkers received through MDAI Datalyzer and reduction once sent",
+      "description": "Top talkers received through MDAI and reduction",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -893,7 +907,7 @@
         "h": 16,
         "w": 12,
         "x": 12,
-        "y": 13
+        "y": 14
       },
       "id": 12,
       "options": {
@@ -945,86 +959,100 @@
           "useBackend": false
         }
       ],
-      "title": "Top Talkers Receivers & Sent Logs Totals",
+      "title": "Top Talkers I/O Logs Totals",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "default": true,
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
+      "collapsed": true,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 1,
+        "w": 24,
         "x": 0,
-        "y": 29
+        "y": 30
       },
-      "id": 15,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "pluginVersion": "11.2.2+security-01",
-      "targets": [
+      "id": 19,
+      "panels": [
         {
           "datasource": {
+            "default": true,
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "ALERTS{alertstate=\"firing\"}",
-          "format": "table",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "A",
-          "useBackend": false
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 19
+          },
+          "id": 15,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.2.2+security-01",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "exemplar": false,
+              "expr": "ALERTS{alertstate=\"firing\"}",
+              "format": "table",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Panel Title",
+          "type": "table"
         }
       ],
-      "title": "Panel Title",
-      "type": "table"
+      "title": "Alerts",
+      "type": "row"
     }
   ],
   "refresh": "",
@@ -1041,6 +1069,6 @@
   "timezone": "browser",
   "title": "Services I/O",
   "uid": "de978rcegwfswb",
-  "version": 21,
+  "version": 24,
   "weekStart": ""
 }
