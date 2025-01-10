@@ -52,16 +52,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-purple",
+                "color": "#6d3b78",
                 "value": null
-              },
-              {
-                "color": "dark-purple",
-                "value": 0
-              },
-              {
-                "color": "purple",
-                "value": 1000
               }
             ]
           }
@@ -152,7 +144,6 @@
           }
         }
       ],
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -173,14 +164,14 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "fillOpacity": 80,
+            "fillOpacity": 100,
             "gradientMode": "hue",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
-            "lineWidth": 1,
+            "lineWidth": 0,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -207,16 +198,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-purple",
+                "color": "#6d3b78",
                 "value": null
-              },
-              {
-                "color": "purple",
-                "value": 10000
-              },
-              {
-                "color": "super-light-purple",
-                "value": 10000000
               }
             ]
           },
@@ -318,13 +301,54 @@
           "color": {
             "mode": "thresholds"
           },
+          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
-                "color": "purple",
+                "color": "#6d3b78",
                 "value": null
+              },
+              {
+                "color": "#eabef3",
+                "value": 0
+              },
+              {
+                "color": "#e288f6",
+                "value": 10
+              },
+              {
+                "color": "#be5ad4",
+                "value": 20
+              },
+              {
+                "color": "#9e4db0",
+                "value": 30
+              },
+              {
+                "color": "#8d33a0",
+                "value": 40
+              },
+              {
+                "color": "#6d3b78",
+                "value": 50
+              },
+              {
+                "color": "#61306b",
+                "value": 60
+              },
+              {
+                "color": "#572961",
+                "value": 70
+              },
+              {
+                "color": "#481254",
+                "value": 80
+              },
+              {
+                "color": "#2f0837",
+                "value": 90
               }
             ]
           },
@@ -340,21 +364,17 @@
       },
       "id": 17,
       "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "percentChangeColorMode": "standard",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": [],
           "fields": "",
           "values": false
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
       "pluginVersion": "11.2.2+security-01",
       "targets": [
@@ -423,7 +443,7 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "gauge"
     },
     {
       "collapsed": false,
@@ -963,7 +983,7 @@
       "type": "timeseries"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -971,88 +991,113 @@
         "y": 30
       },
       "id": 19,
-      "panels": [
+      "panels": [],
+      "title": "Active Filters",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Active alert filters for ingress logs.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 31
+      },
+      "id": 15,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.2.2+security-01",
+      "targets": [
         {
           "datasource": {
-            "default": true,
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "auto",
-                "cellOptions": {
-                  "type": "auto"
-                },
-                "inspect": false
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 19
-          },
-          "id": 15,
-          "options": {
-            "cellHeight": "sm",
-            "footer": {
-              "countRows": false,
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
-            },
-            "showHeader": true
-          },
-          "pluginVersion": "11.2.2+security-01",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "disableTextWrap": false,
-              "editorMode": "builder",
-              "exemplar": false,
-              "expr": "ALERTS{alertstate=\"firing\"}",
-              "format": "table",
-              "fullMetaSearch": false,
-              "includeNullMetadata": true,
-              "instant": true,
-              "legendFormat": "__auto",
-              "range": false,
-              "refId": "A",
-              "useBackend": false
-            }
-          ],
-          "title": "Panel Title",
-          "type": "table"
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "ALERTS{alertstate=\"firing\"}",
+          "format": "table",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A",
+          "useBackend": false
         }
       ],
-      "title": "Alerts",
-      "type": "row"
+      "title": "MDAI Active Filters for Logs",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": false,
+              "Value": true,
+              "__name__": true,
+              "alertstate": true,
+              "instance": true,
+              "job": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value": "",
+              "alertname": "Filter",
+              "job": "",
+              "service_name": "Service",
+              "severity": "Severity"
+            }
+          }
+        }
+      ],
+      "type": "table"
     }
   ],
   "refresh": "",
@@ -1069,6 +1114,6 @@
   "timezone": "browser",
   "title": "Services I/O",
   "uid": "de978rcegwfswb",
-  "version": 24,
+  "version": 29,
   "weekStart": ""
 }
