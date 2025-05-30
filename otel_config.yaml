@@ -47,7 +47,7 @@ spec:
 
       groupbyattrs:
         keys:
-          - logger
+          - mdai_service
 
       resource/observer_receiver_tag:
         attributes:
@@ -72,7 +72,7 @@ spec:
         logs:
           log_record:
             # below is an example of how an environment variable configured in the mdai_v1_mdaihub_sample_config_0_6_0.yaml can be used in an opentelemetry collector config
-            - 'IsMatch(attributes["logger"], "${env:SERVICE_LIST_REGEX}")'
+            - 'IsMatch(attributes["mdai_service"], "${env:SERVICE_LIST_REGEX}")'
 
       # ~~~ MANAGE STATE ~~~~~
       #

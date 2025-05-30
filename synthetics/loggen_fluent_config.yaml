@@ -3,7 +3,7 @@ fileConfigs:
     <source>
       @type tail
       @label @FLUENT_FORWARD
-      path /var/log/containers/mdai-logger*.log
+      path /var/log/containers/mdai-mdai_service*.log
       pos_file /var/log/fluentd/fluentd-containers.log.pos
       tag kubernetes.*
       read_from_head true
@@ -11,7 +11,7 @@ fileConfigs:
         @type multi_format
         <pattern>
           format regexp
-          expression (?<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}) - (?<logger>service\d+) - (?<team>[a-zA-Z0-9]+) - (?<region>[a-zA-Z0-9-]+) - (?<level>INFO|ERROR|WARNING) - (?<message>.+)
+          expression (?<timestamp>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}) - (?<mdai_service>service\d+) - (?<team>[a-zA-Z0-9]+) - (?<region>[a-zA-Z0-9-]+) - (?<level>INFO|ERROR|WARNING) - (?<message>.+)
           time_format %Y-%m-%dT%H:%M:%S%z
         </pattern>
         <pattern>
