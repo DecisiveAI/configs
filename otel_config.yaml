@@ -61,18 +61,12 @@ spec:
             value: "exported"
             action: upsert
 
-      filter/severity:
-        error_mode: ignore
-        logs:
-          log_record:
-            - 'attributes["level"] == "INFO"'
-
-      filter/service_list:
-        error_mode: ignore
-        logs:
-          log_record:
-            # below is an example of how an environment variable configured in the mdai_v1_mdaihub_sample_config_0_6_0.yaml can be used in an opentelemetry collector config
-            - 'IsMatch(attributes["mdai_service"], "${env:SERVICE_LIST_REGEX}")'
+      # filter/service_list:
+      #   error_mode: ignore
+      #   logs:
+      #     log_record:
+      #       # below is an example of how an environment variable configured in the mdai_v1_mdaihub_sample_config_0_6_0.yaml can be used in an opentelemetry collector config
+      #       - 'IsMatch(attributes["mdai_service"], "${env:SERVICE_LIST_REGEX}")'
 
       # ~~~ MANAGE STATE ~~~~~
       #
@@ -164,7 +158,7 @@ spec:
         logs/filter:
           receivers: [ routing/filter ]
           processors: [
-            filter/service_list,
+            # filter/service_list,
             attributes/state_filtered
           ]
           exporters: [ routing/external ]
