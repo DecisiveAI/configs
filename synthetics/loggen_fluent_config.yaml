@@ -3,7 +3,7 @@ fileConfigs:
     <source>
       @type tail
       @label @FLUENT_FORWARD
-      path /var/log/containers/mdai-mdai_service*.log
+      path /var/log/containers/mdai-logger*.log
       pos_file /var/log/fluentd/fluentd-containers.log.pos
       tag kubernetes.*
       read_from_head true
@@ -34,22 +34,28 @@ fileConfigs:
       </filter>
 
       <match kubernetes.**>
-        @type forward
-        <buffer>
-          @type file
-          path /var/log/fluentd/buffer
-          flush_at_shutdown true
-          flush_mode interval
-          flush_interval 5s
-          retry_forever true
-          retry_max_interval 30s
-          chunk_limit_size 8MB
-          queue_limit_length 256
-        </buffer>
-        <server>
-          host gateway-collector.mdai.svc.cluster.local
-          port 8006
-        </server>
+        @type copy
+        <store>
+          @type stdout
+        </store>
+        <store>
+          @type forward
+          <buffer>
+            @type file
+            path /var/log/fluentd/buffer
+            flush_at_shutdown true
+            flush_mode interval
+            flush_interval 5s
+            retry_forever true
+            retry_max_interval 30s
+            chunk_limit_size 8MB
+            queue_limit_length 256
+          </buffer>
+          <server>
+            host gateway-collector.mdai.svc.cluster.local
+            port 8006
+          </server>
+        </store>
       </match>
     </label>
 
